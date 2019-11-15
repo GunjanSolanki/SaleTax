@@ -1,5 +1,4 @@
 require "./order.rb"
-require "./input.rb"
 include Input
 
 output = Order.new
