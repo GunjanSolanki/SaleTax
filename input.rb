@@ -5,9 +5,12 @@ module Input
 
   def get_input
     orders = []
+    order_count = 0
     no_of_orders = gets.chomp.to_i
     no_of_orders.times {
+      order_count+=1
       input_list = []
+      puts "\nOrder : #{order_count}"
       puts "Enter number of items to order :\n"
       get_item(input_list)
       orders << input_list
