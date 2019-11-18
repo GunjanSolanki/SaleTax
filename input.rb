@@ -3,7 +3,7 @@ module Input
                "1 imported box of chocolates at 10.00", "1 imported bottle of perfume at 47.50",
                "1 imported bottle of perfume at 27.99", "1 perfume at 18.99", "1 pills at 9.75", "1 imported box of chocolates at 11.25"]
 
-  def get_input
+  def self.get_input
     orders = []
     order_count = 0
     no_of_orders = gets.chomp.to_i
@@ -12,13 +12,13 @@ module Input
       input_list = []
       puts "\nOrder : #{order_count}"
       puts "Enter number of items to order :\n"
-      get_item(input_list)
+      self.get_item(input_list)
       orders << input_list
     }
     orders
   end
 
-  def get_item(input_list)
+  def self.get_item(input_list)
     no_of_items = gets.chomp.to_i
     no_of_items.times {
       puts "Enter Item description : "

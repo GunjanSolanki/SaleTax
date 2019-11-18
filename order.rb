@@ -1,11 +1,11 @@
 require "./tax.rb"
 require "./item.rb"
-require "./calculator.rb"
 require "./input.rb"
 
-TAX_FREE_ITEMS = ["book", "chocolate", "chocolates", "pills"]
+TAX_FREE_ITEMS = %w[book chocolate chocolates pills]
+TAX_FREE_ITEMS.freeze
+
 class Order
-  include Tax, Calculator, Input
   attr_accessor :total_tax, :total_bill, :item_description, :item_price
 
   def initialize
@@ -24,21 +24,20 @@ class Order
   end
 
   def get_product_details(item)
-    product = Item.new
-    imported = product.imported?(item)
+    imported = Item.imported?(item)
     self.item_description = ""
-    self.item_description += product.get_name(item, imported)
+    self.item_description += Item.get_name(item, imported)
     item_name = self.item_description.split()[-1]
     tax_free = TAX_FREE_ITEMS.include?(item_name)
-    price = product.get_price(item)
-    quantity = product.get_quantity(item)
-    sales_tax = sales_tax(imported, tax_free)
-    self.item_price = product.total_item_price(price, quantity, sales_tax)
+    price = Item.get_price(item)
+    quantity = Item.get_quantity(item)
+    sales_tax = Tax.sales_tax(imported, tax_free)
+    self.item_price = Item.total_item_price(price, quantity, sales_tax)
     calculate_total(price, quantity, sales_tax, item_price)
   end
   
   def calculate_total(price, quantity, sales_tax, item_price)
-    self.total_tax += calculate_tax(price, quantity, sales_tax)
+    self.total_tax += Calculator.calculate_tax(price, quantity, sales_tax)
     self.total_bill += item_price
   end
 

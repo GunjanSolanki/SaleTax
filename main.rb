@@ -1,11 +1,11 @@
 require "./order.rb"
-include Input
+require "./input.rb"
 
 output = Order.new
 
 puts "Welcome to E-bay!\n"
 puts "Enter number of orders : \n"
-orders = get_input
+orders = Input.get_input
 
 puts "\n------------------------------Order-Receipt---------------------------------------"
 

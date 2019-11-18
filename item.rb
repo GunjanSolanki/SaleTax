@@ -1,10 +1,8 @@
-
 require "./calculator.rb"
 
 class Item
-  include Calculator
 
-  def get_name(item, imported)
+  def self.get_name(item, imported)
     if imported
       item.split().slice(0..4).join(" ")
     else
@@ -12,20 +10,20 @@ class Item
     end
   end
 
-  def imported?(item)
+  def self.imported?(item)
     item["imported"]
   end
 
-  def get_price(item)
+  def self.get_price(item)
     item.split()[-1]
   end
 
-  def get_quantity(item)
+  def self.get_quantity(item)
     item.split()[0]
   end
 
-  def total_item_price(price, quantity, sales_tax)
-    total_price = price.to_f + calculate_tax(price, quantity, sales_tax)
-    round_of_amount(total_price)
+  def self.total_item_price(price, quantity, sales_tax)
+    total_price = price.to_f + Calculator.calculate_tax(price, quantity, sales_tax)
+    Calculator.round_of_amount(total_price)
   end
 end
