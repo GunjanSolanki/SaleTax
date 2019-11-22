@@ -14,21 +14,10 @@ class Order
     self.item_description = ""
     self.item_price = 0
   end
-
-  def print_product_details(order)
-    order.each do |item|
-      get_product_details(item)
-      print_order_receipt(item_description, item_price)
-    end
-    print_amount_receipt(total_tax, total_bill)
-  end
-
+  
   def get_product_details(item)
     imported = Item.imported?(item)
-    self.item_description = ""
-    self.item_description += Item.get_name(item, imported)
-    item_name = self.item_description.split()[-1]
-    tax_free = TAX_FREE_ITEMS.include?(item_name)
+    tax_free = tax_free?(item, imported)
     price = Item.get_price(item)
     quantity = Item.get_quantity(item)
     sales_tax = Tax.sales_tax(imported, tax_free)
@@ -36,6 +25,20 @@ class Order
     calculate_total(price, quantity, sales_tax, item_price)
   end
   
+  def print_receipt(input)
+    input.each do |item|
+      get_product_details(item)
+      print_order_receipt(item_description, item_price)
+    end
+    print_amount_receipt(total_tax, total_bill)
+  end
+
+  def tax_free?(item, imported)
+    self.item_description += Item.get_name(item, imported)
+    item_name = self.item_description.split()[-1]
+    tax_free = TAX_FREE_ITEMS.include?(item_name)
+  end
+
   def calculate_total(price, quantity, sales_tax, item_price)
     self.total_tax += Calculator.calculate_tax(price, quantity, sales_tax)
     self.total_bill += item_price
@@ -58,4 +61,5 @@ class Order
     print receipt
     puts "\n-----------------------------------------------------------------------------------"
   end
+
 end

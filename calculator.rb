@@ -7,4 +7,5 @@ module Calculator
   def self.round_of_amount(amount)                                          # round to 2 decimal place
     ((amount * 100).round / 100.0)
   end
+  
 end

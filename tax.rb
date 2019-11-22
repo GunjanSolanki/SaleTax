@@ -7,9 +7,9 @@ module Tax
   end
 
   private
-
   def self.tax_on_tax_free_items(imported)                          # tax applicable on tax free items
     return 5 if imported
     0
   end
+
 end

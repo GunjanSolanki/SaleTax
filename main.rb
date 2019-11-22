@@ -1,18 +1,18 @@
 require "./order.rb"
 require "./input.rb"
 
-output = Order.new
+order = Order.new
 
 puts "Welcome to E-bay!\n"
 puts "Enter number of orders : \n"
-orders = Input.get_input
+inputs = Input.get_order_input
 
 puts "\n------------------------------Order-Receipt---------------------------------------"
 
 order_count = 1
-orders.each do |order|
+inputs.each do |input|
   puts "Order : #{order_count}"
-  output.print_product_details(order)
+  order.print_receipt(input)
   order_count += 1
 end
 
