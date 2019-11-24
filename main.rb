@@ -1,19 +1,21 @@
 require "./order.rb"
-require "./input.rb"
-
-order = Order.new
+require "./cart.rb"
 
 puts "Welcome to E-bay!\n"
 puts "Enter number of orders : \n"
-inputs = Input.get_order_input
+order_count = 0
+no_of_orders = gets.chomp.to_i
 
 puts "\n------------------------------Order-Receipt---------------------------------------"
 
-order_count = 1
-inputs.each do |input|
+no_of_orders.times do
+  puts "Enter details of Order : #{order_count+=1}"
+  puts "Enter number of items to order :\n"
+  no_of_items = gets.chomp.to_i
+  cart = Cart.new
+  cart.add_to_cart(no_of_items, items_in_cart=[])
   puts "Order : #{order_count}"
-  order.print_receipt(input)
-  order_count += 1
+  order = Order.new
+  order.print_receipt(items_in_cart)
 end
 
-puts "----------------------------------------------------------------------------------"
