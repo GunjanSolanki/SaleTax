@@ -13,9 +13,9 @@ no_of_orders.times do
   puts "Enter number of items to order :\n"
   no_of_items = gets.chomp.to_i
   cart = Cart.new
-  cart.add_to_cart(no_of_items, items_in_cart=[])
+  cart.add_to_cart(no_of_items, items= [])
   puts "Order : #{order_count}"
-  order = Order.new
-  order.print_receipt(items_in_cart)
+  order = Order.new(items)
+  order.print_receipt
 end
 

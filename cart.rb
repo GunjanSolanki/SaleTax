@@ -5,13 +5,13 @@ ITEM_LIST = ["1 book at 12.49", "1 CD at 14.99", "1 chocolate bar at 0.85",
              "1 imported box of chocolates at 11.25"].freeze
 
 class Cart
-  def add_to_cart(no_of_items, cart)
+  def add_to_cart(no_of_items, items)
     no_of_items.times do 
       puts "Enter Item description : "
       input_item = gets.chomp
-      (ITEM_LIST.include?(input_item)) ? (cart << input_item) : (print "Invalid Item!\n")
+      (ITEM_LIST.include?(input_item)) ? (items << input_item) : (print "Invalid Item!\n")
     end
-    cart
+    items
   end
   
 end

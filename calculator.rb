@@ -2,7 +2,8 @@
 module Calculator
   extend self
   def calculate_tax(price, quantity, sales_tax)
-    round_of_amount(price.to_f * quantity.to_f * sales_tax / 100)
+    tax = round_of_amount(price.to_f * quantity.to_f * sales_tax / 100)
+    tax
   end
 
   def round_of_amount(amount) 

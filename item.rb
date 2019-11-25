@@ -1,19 +1,25 @@
 require "./calculator.rb"
 
 class Item
-  def get_name(product, imported)
+  attr_accessor :product
+  
+  def initialize(product)
+    self.product = product
+  end
+
+  def get_name(imported)
     imported ? (product.split().slice(0..4).join(" ")) : (product.split().slice(0..1).join(" "))
   end
 
-  def imported?(product)
+  def imported?
     product["imported"]
   end
 
-  def get_price(product)
+  def get_price
     product.split()[-1]
   end
 
-  def get_quantity(product)
+  def get_quantity
     product.split()[0]
   end
 
