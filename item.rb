@@ -1,14 +1,16 @@
 require "./calculator.rb"
 
+TAX_FREE_ITEMS = %w(book chocolate chocolates pills).freeze
+
 class Item
-  attr_accessor :product
-  
+  attr_accessor :product, :item_description
+
   def initialize(product)
     self.product = product
   end
 
-  def get_name(imported)
-    imported ? (product.split().slice(0..4).join(" ")) : (product.split().slice(0..1).join(" "))
+  def get_name
+    imported? ? (product.split().slice(0..4).join(" ")) : (product.split().slice(0..1).join(" "))
   end
 
   def imported?
@@ -23,9 +25,21 @@ class Item
     product.split()[0]
   end
 
-  def total_item_price(price, quantity, sales_tax)
-    total_price = price.to_f + Calculator.calculate_tax(price, quantity, sales_tax)
+  def total_item_price(sales_tax)
+    total_price = get_price.to_f + Calculator.calculate_tax(get_price, get_quantity, sales_tax)
     Calculator.round_of_amount(total_price)
+  end
+
+  def tax_free?
+    item_name = get_name.split()[-1]
+    TAX_FREE_ITEMS.include?(item_name)
+  end
+
+  def get_product_details
+    imported = imported?
+    item_description = get_name
+    price = get_price
+    quantity = get_quantity
   end
 
 end

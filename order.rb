@@ -1,59 +1,60 @@
 require "./tax.rb"
 require "./item.rb"
-require "./cart.rb"
 
-TAX_FREE_ITEMS = %w(book chocolate chocolates pills).freeze
+ITEM_LIST = ["1 book at 12.49", "1 CD at 14.99", "1 chocolate bar at 0.85",
+  "1 imported box of chocolates at 10.00", "1 imported bottle of perfume at 47.50",
+  "1 imported bottle of perfume at 27.99", "1 perfume at 18.99", "1 pill at 9.75",
+  "1 imported box of chocolates at 11.25"].freeze
 
 class Order
-  attr_accessor :total_tax, :total_bill, :item_description, :item_price, :items
+  attr_accessor :total_tax, :total_bill, :item_price, :items, :sales_tax
 
-  def initialize(items)
+  def initialize
     self.total_tax = 0
     self.total_bill = 0
-    self.item_description = ""
     self.item_price = 0
-    self.items = items 
+    self.items = []
   end
 
+  def get_details
+    puts "Enter number of items to order :\n"
+    no_of_items = gets.chomp.to_i
+    no_of_items.times do 
+      add_item_description
+    end
+  end
+  
   def print_receipt
     items.each do |product|
       item = Item.new(product)
-      get_product_details(item)
-      print_order_receipt
+      print_order_receipt(item)
     end
     print_amount_receipt
   end
   
-  def get_product_details(item)
-    imported = item.imported?
-    tax_free = tax_free?(item, imported)
-    price = item.get_price
-    quantity = item.get_quantity
-    sales_tax = Tax.sales_tax(imported, tax_free)
-    self.item_price = item.total_item_price(price, quantity, sales_tax)
-    calculate_total(price, quantity, sales_tax, item_price)
+  private
+  
+  def add_item_description
+    puts "Enter Item description : "
+    input_item = gets.chomp
+    (ITEM_LIST.include?(input_item)) ? (items << input_item) : (print "Invalid Item!\n")
   end
 
-  def tax_free?(item, imported)
-    self.item_description = ""
-    self.item_description += item.get_name(imported)
-    item_name = self.item_description.split()[-1]
-    tax_free = TAX_FREE_ITEMS.include?(item_name)
+  def print_order_receipt(item)
+    sales_tax = Tax.sales_tax(item.imported?, item.tax_free?)
+    self.item_price = 0
+    self.item_price += item.total_item_price(sales_tax)
+    receipt = "\n"
+    receipt.concat(item.get_name + " : " + self.item_price.to_s + "\n")
+    print receipt
+    calculate_total_amount(item, sales_tax)
   end
-
-  def calculate_total(price, quantity, sales_tax, item_price)
-    self.total_tax += Calculator.calculate_tax(price, quantity, sales_tax)
+  
+  def calculate_total_amount(item, sales_tax)
+    self.total_tax += Calculator.calculate_tax(item.get_price, item.get_quantity, sales_tax)
     self.total_bill += item_price
   end
-
-  private
-
-  def print_order_receipt
-    receipt = "\n"
-    receipt.concat(item_description + " : " + item_price.to_s + "\n")
-    print receipt
-  end
-
+  
   def print_amount_receipt
     receipt = ""
     receipt.concat("\nSales Tax: " + total_tax.to_s)
