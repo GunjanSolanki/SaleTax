@@ -7,9 +7,9 @@ no_of_orders = gets.chomp.to_i
 puts "\n------------------------------Order-Receipt---------------------------------------"
 
 no_of_orders.times do |order_count|
-  puts "Enter details of Order : #{order_count+=1}"
+  puts "Enter details of Order : #{order_count += 1}"
   order = Order.new
-  order.get_details
+  order.get_order_details
   puts "\nOrder : #{order_count}"
   order.print_receipt
 end

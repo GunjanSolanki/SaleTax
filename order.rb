@@ -16,7 +16,7 @@ class Order
     self.items = []
   end
 
-  def get_details
+  def get_order_details
     puts "Enter number of items to order :\n"
     no_of_items = gets.chomp.to_i
     no_of_items.times do 
@@ -41,17 +41,16 @@ class Order
   end
 
   def print_order_receipt(item)
-    sales_tax = Tax.sales_tax(item.imported?, item.tax_free?)
     self.item_price = 0
-    self.item_price += item.total_item_price(sales_tax)
+    self.item_price += item.total_item_price
     receipt = "\n"
-    receipt.concat(item.get_name + " : " + self.item_price.to_s + "\n")
+    receipt.concat(item.get_name + " : " + item_price.to_s + "\n")
     print receipt
-    calculate_total_amount(item, sales_tax)
+    calculate_total_amount(item)
   end
   
-  def calculate_total_amount(item, sales_tax)
-    self.total_tax += Calculator.calculate_tax(item.get_price, item.get_quantity, sales_tax)
+  def calculate_total_amount(item)
+    self.total_tax += Calculator.calculate_tax(item.get_price, item.get_quantity, item.item_sales_tax)
     self.total_bill += item_price
   end
   
