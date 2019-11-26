@@ -7,7 +7,7 @@ ITEMS_LIST = ["1 book at 12.49", "1 CD at 14.99", "1 chocolate bar at 0.85",
   "1 imported box of chocolates at 11.25"].freeze
 
 class Order
-  attr_accessor :total_tax, :total_bill, :total_item_price, :items, :sales_tax, :receipt
+  attr_accessor :total_tax, :total_bill, :total_item_price, :items, :receipt, :sales_tax
 
   def initialize
     self.total_tax = 0
@@ -42,14 +42,10 @@ class Order
   
   def get_receipt(item)
     self.total_item_price = 0
-    self.total_item_price += item.total_item_price
+    self.total_item_price = item.total_item_price
     self.receipt.concat(item.get_name + " : " + total_item_price.to_s + "\n")
-    calculate_total_amount(item)
-  end
-  
-  def calculate_total_amount(item)
-    self.total_tax += Calculator.calculate_tax(item.get_price, item.get_quantity, item.item_sales_tax)
     self.total_bill += total_item_price
+    self.total_tax += Calculator.calculate_tax(item.get_price, item.get_quantity, item.item_sales_tax)
   end
   
   def print_amount_receipt
@@ -61,3 +57,4 @@ class Order
   end
 
 end
+

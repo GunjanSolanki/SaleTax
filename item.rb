@@ -40,4 +40,9 @@ class Item
     sales_tax = Tax.sales_tax(imported?, tax_free?)
   end
 
+  def total_item_tax
+    total_tax = Calculator.calculate_tax(get_price, get_quantity, item_sales_tax)
+    Calculator.round_of_amount(total_tax)
+  end
+
 end
