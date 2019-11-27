@@ -27,14 +27,14 @@ class Order
       self.total_bill += item.get_item_receipt[1].to_f
       self.total_tax += item.get_item_receipt[2].to_f
     end
-  end
-   
-  def print_order_receipt
     self.receipt.concat("\nSales Tax: " + total_tax.to_s)
     self.receipt.concat("\nTotal: " + total_bill.to_s + "\n")
+  end
+  
+  def print_order_receipt
     print receipt
     puts "\n-----------------------------------------------------------------------------------"
   end
-
+  
 end
 
