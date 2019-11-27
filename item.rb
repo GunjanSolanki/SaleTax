@@ -34,7 +34,6 @@ class Item
 
   def total_item_price
     total_price = get_price.to_f + Calculator.calculate_tax(get_price, get_quantity, item_sales_tax)
-    Calculator.round_of_amount(total_price)
   end
 
   def tax_free?
@@ -48,7 +47,6 @@ class Item
 
   def total_item_tax
     total_tax = Calculator.calculate_tax(get_price, get_quantity, item_sales_tax)
-    Calculator.round_of_amount(total_tax)
   end
 
   def get_item_receipt
