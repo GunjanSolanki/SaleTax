@@ -50,10 +50,10 @@ class Item
   end
 
   def get_item_receipt
-    self.receipt.concat(get_name + " : " + total_item_price.to_s + "\n")
+    receipt.concat(get_name + " : " + total_item_price.to_s + "\n")
     total_bill = total_item_price
     total_tax = Calculator.calculate_tax(get_price, get_quantity, item_sales_tax)
-    item_details = [self.receipt, total_bill, total_tax]
+    [self.receipt, total_bill, total_tax]
   end
 
 end
