@@ -5,7 +5,8 @@ module Calculator
     tax = price.to_f * quantity.to_f * sales_tax
     round_of_amount(tax / 100) 
   end
-
+ 
+  private
   def round_of_amount(amount) 
     amount.round(2)                                                   # round upto 2 decimal places
   end
