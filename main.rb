@@ -10,9 +10,9 @@ no_of_orders.times do |order_count|
   puts "Enter details of Order : #{order_count += 1}"
   order = Order.new
   order.get_order_details
-  order.get_item_receipt
+  order.get_order_receipt
   puts "\nOrder : #{order_count}"
-  order.print_receipt
+  order.print_order_receipt
 end
 
 
